@@ -6,8 +6,8 @@
 #define pino_echo 11
 
 //Definindo pinos do motor
-int IN1 = 2;
-int IN2 = 4;
+int IN1 = 4;
+int IN2 = 5;
 int IN3 = 6;
 int IN4 = 7;
 
@@ -37,22 +37,24 @@ void loop() {
 //Exibe informações no serial monitor
   Serial.print("Distancia em cm: ");
   Serial.println(cmMsec);
-  delay(1000);
+  //delay(1000); --> tiramos para parar na hora
 
 //Inicia motores
-  digitalWrite(IN1, HIGH);
-  digitalWrite(IN2, LOW);
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
   digitalWrite(IN3, HIGH);
   digitalWrite(IN4, LOW);
-
+  //delay(10000);
+  
 //Detecta objeto
 if(cmMsec <= 20){
   
-  //Para motores
+  //Inverte motores
   digitalWrite(IN1, HIGH);
-  digitalWrite(IN2, HIGH);
-  digitalWrite(IN3, HIGH);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW);
   digitalWrite(IN4, HIGH);
+  //delay(10000);
 
 }
 
