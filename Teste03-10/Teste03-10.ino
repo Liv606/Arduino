@@ -26,11 +26,9 @@
 // 0 before being lost. 5000 means the line is directly under sensor 5 or was
 // last seen by sensor 5 before being lost.
 
-// Oi Livia
-
 QTRSensors qtr;
 
-const uint8_t SensorCount = 2; //Declarando o número de sensores
+const uint8_t SensorCount = 8; //Declarando o número de sensores
 uint16_t sensorValues[SensorCount];
 
   #define pinMot1A 5   //ESQUERDA - TRAZ
@@ -44,7 +42,8 @@ uint16_t sensorValues[SensorCount];
 
 void setup()
 {
-  Serial.begin(9600);
+  
+Serial.begin(9600);
   // configure the sensors
   qtr.setTypeAnalog();
   qtr.setSensorPins((const uint8_t[]){A0,A1,A2,A3,A4,A5,A6,A7}, SensorCount);  // Declarando os sensores (onde estão ligados no arduino) 
@@ -57,12 +56,6 @@ void setup()
   // 0.1 ms per sensor * 4 samples per sensor read (default) * 6 sensors
   // * 10 reads per calibrate() call = ~24 ms per calibrate() call.
   // Call calibrate() 400 times to make calibration take about 10 seconds.
-
-// Declarando os motores 
-  pinMode (pinMot1A, OUTPUT);
-  pinMode (MotorEsquerdaFrente, OUTPUT);
-  pinMode (MotorDireitaFrente, OUTPUT);
-  pinMode (pinMot2B, OUTPUT);
   
   Serial.println("calibrando..."); //se abrir o serial monitor, aparecerá "calibrando"
   for (uint16_t i = 0; i < 400; i++)
@@ -90,6 +83,12 @@ void setup()
   Serial.println();
   Serial.println();
 
+  
+ // Declarando os motores 
+  pinMode (pinMot1A, OUTPUT);
+  pinMode (MotorEsquerdaFrente, OUTPUT);
+  pinMode (MotorDireitaFrente, OUTPUT);
+  pinMode (pinMot2B, OUTPUT);
   
   analogWrite (MotorEsquerdaFrente, LOW); //Low significa "desligado"
   analogWrite (MotorDireitaFrente, LOW);
@@ -142,14 +141,14 @@ void loop()
 //delay(250);
     // Valores que foram calibrados na casa do rodrigo, provavelmente mudarão por conta de sombras e iluminação
     // esquerda
-    if(position < 3800) {
+    if(position <= 3300) {
       vVB = velocidade - 50;  // Reduzimos a velocidade em x unidades para que o motor da esquerda fique lento e ele faça a curva para esquerda 
       } else // reto
-        if(position >= 3800 && position <= 4800) {
+        if(position > 3300 && position < 3800) {
           vVA = velocidade;
           vVB = velocidade;
         }else // direita
-         if((position > 4800)) {
+         if((position >= 3800)) {
             vVA = velocidade - 50 ; // Reduzimos a velocidade em x unidades para que o motor da direita fique lento e ele faça a curva para a direita
           }
     analogWrite (MotorEsquerdaFrente, vVA); //Aqui esta dizendo que o motor da esquerda terá a velocidade de vVA
@@ -175,5 +174,4 @@ void loop()
   }*/
 
   //delay(50);
-
-}
+        }
