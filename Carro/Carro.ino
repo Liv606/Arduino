@@ -87,7 +87,7 @@ void loop() {
     forward_brake(motorspeeda, motorspeedb);
   
 //Detecta objeto
-if(cmMsec <= 20){
+if(cmMsec <= 16){
   
   //Inverte motores
   digitalWrite(IN1, HIGH);
@@ -96,6 +96,13 @@ if(cmMsec <= 20){
   digitalWrite(IN4, LOW);
   //delay(10000);
 
+}else if(cmMsec <= 20 && cmMsec >= 17){
+
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, LOW);
+  
 }
 
 }
